@@ -452,7 +452,9 @@ void qemu_hexdump(const char *buf, FILE *fp, const char *prefix, size_t size);
 #define VEC_OR(v1, v2) ((v1) | (v2))
 /* altivec.h may redefine the bool macro as vector type.
  * Reset it to POSIX semantics. */
+#ifndef __cplusplus
 #define bool _Bool
+#endif
 #elif defined __SSE2__
 #include <emmintrin.h>
 #define VECTYPE        __m128i
