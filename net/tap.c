@@ -303,6 +303,10 @@ static void tap_cleanup(NetClientState *nc)
 
     qemu_purge_queued_packets(nc);
 
+    tap_read_poll(s, false);
+    tap_write_poll(s, false);
+    close(s->fd);
+
     if (s->down_script[0]) {
         launch_script(s->down_script, s->down_script_arg, s->fd, &err);
         if (err) {
@@ -310,9 +314,7 @@ static void tap_cleanup(NetClientState *nc)
         }
     }
 
-    tap_read_poll(s, false);
-    tap_write_poll(s, false);
-    close(s->fd);
+
     s->fd = -1;
 }
 
